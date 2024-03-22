@@ -14,5 +14,13 @@ app.use(express.static("public")) //favicon, image for public
 
 
 app.use(cookieParser()) // to set cookie on users brower from server
+
+
+// routes import
+
+import userRouteRegister from './routes/user.routes.js'
+// route declaration
+app.use("/api/v1/users",userRouteRegister)
+// http://localhost:8000/users/register
  
 export {app}

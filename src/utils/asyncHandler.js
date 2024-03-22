@@ -14,11 +14,11 @@
 
 // aproach 2 using promise
 
-const asyncHanler= (requesHandler)=>{
-    (req,res,next)=>{
+const asyncHandler= (requesHandler)=>{
+   return (req,res,next)=>{
         Promise.resolve(requesHandler(req,res,next)).catch((err)=> next(err))
     }
 }
 
 
-export { asyncHanler }
+export { asyncHandler }
