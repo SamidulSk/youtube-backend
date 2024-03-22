@@ -1,6 +1,8 @@
 import mongoose, { Schema } from "mongoose"
 import jwt from "jsonwebtoken"  // to generate unique string   header payload(data) verify signature(secret)
 import bcrypt from "bcrypt"  // to encrypt and decrypt password
+
+
 const userSchema = new Schema(
     {
         username: {
@@ -39,7 +41,7 @@ const userSchema = new Schema(
             }
         ],
         password: {
-            type: String, //chalange
+            type: String, //chalange ->encrytion and decryption
             required: [true, 'Password is required']
         },
         refreshToken: {
@@ -57,7 +59,7 @@ userSchema.pre("save", async function (next) {  // prehook to encryt password
     next()
 })
 
-userSchema.methods.isPasswordCorrect = async function (password) {  //add method
+userSchema.methods.isPasswordCorrect = async function (password) {  //add custom method
     return await bcrypt.compare(password, this.password)  //true or false
 }
 
@@ -91,8 +93,6 @@ userSchema.methods.generateRefreshToken = function () {
 
     )
 }
-userSchema.methods.generateRefreshToken = function () {
 
-}
 
 export const user = mongoose.model("User", userSchema)

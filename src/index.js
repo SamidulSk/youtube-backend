@@ -14,6 +14,10 @@ connectDB()
         console.error("Error:-",error)
         throw error
     })
+    app.on("Error",(error)=>{
+        console.log("Error",error)
+        throw error
+    })
     app.listen(process.env.PORT || 8000,()=>{
         console.log(`server is running at prot :${process.env.PORT}`)
     })
