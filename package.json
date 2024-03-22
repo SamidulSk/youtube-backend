@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon youtube_backend/src/index.js -r dotenv/config --experimental-json-modules"
+    "dev": "nodemon /src/index.js"
   },
   "author": "sk samidul",
   "license": "ISC",
