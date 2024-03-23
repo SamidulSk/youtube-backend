@@ -1,44 +1,47 @@
-import mongoose, { Schema } from "mongoose";
-import mongooseAggregatePaginate from "mongooseAggregatePaginate"
+import mongoose, {Schema} from "mongoose";
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
+
 const videoSchema = new Schema(
     {
-        videoFile: { // cloudinary url
-            type: String,
+        videoFile: {
+            type: String, //cloudinary url
             required: true
         },
-        thumbnail: { // cloudinary url
-            type: String,
+        thumbnail: {
+            type: String, //cloudinary url
             required: true
         },
-        title: { 
-            type: String,
+        title: {
+            type: String, 
             required: true
         },
-        description: { 
-            type: String,
+        description: {
+            type: String, 
             required: true
         },
-        duration: { 
-            type: Number,  //cloudinary
+        duration: {
+            type: Number, 
             required: true
         },
-        views:{
-            type:Number,
-            default:0
+        views: {
+            type: Number,
+            default: 0
         },
-        isPublished:{
-            type:Boolean,
-            default:true
+        isPublished: {
+            type: Boolean,
+            default: true
         },
-        owner:{
-            type:Schema.Types.ObjectId,
-            ref:"user"
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
         }
-    },
+
+    }, 
     {
         timestamps: true
     }
 )
 
-videoSchema.plugin(mongooseAggregatePaginate) // now we can write aggregation query->aggregation pipeline
-export const video = mongoose.model("Video", videoSchema)
+videoSchema.plugin(mongooseAggregatePaginate)
+
+export const Video = mongoose.model("Video", videoSchema)

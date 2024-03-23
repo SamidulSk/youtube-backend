@@ -1,26 +1,25 @@
-import express from "express";
+import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
-const app=express()
 
-app.use(cors({  //middle ware
-    origin:process.env.CORS_ORIGIN,
-    credentials:true
+const app = express()
+
+app.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true
 }))
 
-app.use(express.json( {limit:"10kb"})) //handle json file using middleware
-app.use(express.urlencoded( {extended:true,limit:"10kb"})) // handle url
-app.use(express.static("public")) //favicon, image for public
-
-
-app.use(cookieParser()) // to set cookie on users brower from server
+app.use(express.json({limit: "16kb"})) // handle json file 
+app.use(express.urlencoded({extended: true, limit: "16kb"})) // handle url
+app.use(express.static("public"))
+app.use(cookieParser())
 
 
 // routes import
 
-import userRouteRegister from './routes/user.routes.js'
+import userRouter from './routes/user.routes.js'
 // route declaration
-app.use("/api/v1/users",userRouteRegister)
-// http://localhost:8000/users/register
- 
-export {app}
+app.use("/api/v1/users", userRouter)
+// http://localhost:8000/api/v1/users/register
+
+export { app }

@@ -1,8 +1,7 @@
-//kon kon si file me prettier apply nahi karna hai
+/.vscode
+/node_modules
+./dist
 
-// /.vscode
-// /node_modules
-// /.dist
-// *.env
-// .env
-// .env.*
+*.env
+.env
+.env.*
