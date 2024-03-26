@@ -176,8 +176,8 @@ const logoutUser = asyncHandler(async (req, res) => {
    await User.findByIdAndUpdate(
       req.user._id,
       {
-         $set: {
-            refreshToken: undefined
+         $unset: {
+            refreshToken: 1 // this removes the field from document
          }
       },
       {
@@ -263,7 +263,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
    User.findByIdAndUpdate(
       req.user?._id,
       {
-         $set: {
+         $set: {  //ak sath multiple update isiliye set operator
             fullName: fullName,
             email: email
          }
