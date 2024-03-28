@@ -25,7 +25,7 @@ const generateAccessAndRefereshTokens = async (userId) => {
       throw new ApiError(500, "Something went wrong while generating referesh and access token")
    }
 }
-
+// ***** register
 const registerUser = asyncHandler(async (req, res) => {
    // get user details from frontend
    // validation - not empty
@@ -233,22 +233,25 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       throw new ApiError(401, error?.message || "Invalid refresh token")
    }
 })
-//
+// change password
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-   const { oldPassword, newPassword } = req.body
-   const user = User.findById(req.user?._id)
-   const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
-   if (!isPasswordCorrect) {
-      throw new ApiError(400, "Invalid old password")
+   const { oldPassword, newPassword } = req.body;
+   const user = await User.findById(req.user?._id); // Adding await here
+   if (!user) {
+      throw new ApiError(404, "User not found"); // Handling case where user is not found
    }
-   user.password = newPassword
-   user.save({ validateBeforeSave: false })
+   const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
+   if (!isPasswordCorrect) {
+      throw new ApiError(400, "Invalid old password");
+   }
+   user.password = newPassword;
+   await user.save({ validateBeforeSave: false }); // Adding await here
    return res
       .status(200)
-      .json(new ApiResponse(200, {}, "Password Change successfully"))
-})
+      .json(new ApiResponse(200, {}, "Password changed successfully"));
+});
 
-//
+// currnet user details
 const getCurrentUser = asyncHandler(async (req, res) => {
    return res
       .status(200)
