@@ -5,10 +5,10 @@ const likeSchema=new Schema({
         type:Schema.Types.ObjectId,
         ref:"Video"
     },
-    comment:{   // konsi comment me like
-        typeof:Schema.Types.ObjectId,
-        ref:"Comment"
-    },
+    // comment:{   // konsi comment me like
+    //     typeof:Schema.Types.ObjectId,
+    //     ref:"Comment"
+    // },
     tweet:{
         type:Schema.Types.ObjectId,
         ref:"Tweet"

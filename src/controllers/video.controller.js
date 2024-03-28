@@ -35,7 +35,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
 const publishAVideo = asyncHandler(async (req, res) => {
     const { title, description } = req.body;
-    const userId = req.user._id; // Assuming you have authentication middleware that attaches user to request
+    const userId = req.user._id; //i have authentication middleware that attaches user to request
 
     // Upload video to cloudinary
     const cloudinaryResponse = await uploadOnCloudinary(req.file);
