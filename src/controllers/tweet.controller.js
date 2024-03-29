@@ -5,15 +5,17 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
+//create tweet
 const createTweet = asyncHandler(async (req, res) => {
     const { content } = req.body;
-    const userId = req.user._id; // Assuming you have authentication middleware that attaches user to request
+    const userId = req.user._id; // i have authentication middleware that attaches user to request
 
-    const tweet = await Tweet.create({ content, user: userId });
+    const tweet = await Tweet.create({ content, owner: userId });
 
     res.status(201).json(new ApiResponse(201, tweet, "Tweet created successfully"));
 });
 
+//get user tweets
 const getUserTweets = asyncHandler(async (req, res) => {
     const { userId } = req.params;
 
@@ -21,11 +23,11 @@ const getUserTweets = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Invalid user ID");
     }
 
-    const tweets = await Tweet.find({ user: userId });
+    const tweets = await Tweet.find({ owner: userId });
 
     res.status(200).json(new ApiResponse(200, tweets, "User tweets fetched successfully"));
 });
-
+// update tweet
 const updateTweet = asyncHandler(async (req, res) => {
     const { tweetId } = req.params;
     const { content } = req.body;
@@ -45,7 +47,7 @@ const updateTweet = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, tweet, "Tweet updated successfully"));
 });
-
+// delete tweet
 const deleteTweet = asyncHandler(async (req, res) => {
     const { tweetId } = req.params;
 

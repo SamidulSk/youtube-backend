@@ -4,18 +4,19 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
+//create playlist
 const createPlaylist = asyncHandler(async (req, res) => {
     const { name, description } = req.body;
 
     const playlist = await Playlist.create({
         name,
         description,
-        user: req.user._id // Assuming you have authentication middleware that attaches user to request
+        user: req.user._id // i have authentication middleware that attaches user to request
     });
 
     res.status(201).json(new ApiResponse(201, playlist, "Playlist created successfully"));
 });
-
+// get user playlists
 const getUserPlaylists = asyncHandler(async (req, res) => {
     const { userId } = req.params;
 
@@ -23,7 +24,7 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, playlists, "User playlists fetched successfully"));
 });
-
+//get playlist by id
 const getPlaylistById = asyncHandler(async (req, res) => {
     const { playlistId } = req.params;
 
@@ -39,7 +40,7 @@ const getPlaylistById = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, playlist, "Playlist fetched successfully"));
 });
-
+//add video to playlist
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
     const { playlistId, videoId } = req.params;
 
@@ -54,7 +55,7 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, playlist, "Video added to playlist successfully"));
 });
-
+//remove video from playlist
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
     const { playlistId, videoId } = req.params;
 
@@ -69,7 +70,7 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, playlist, "Video removed from playlist successfully"));
 });
-
+//delete a playlist
 const deletePlaylist = asyncHandler(async (req, res) => {
     const { playlistId } = req.params;
 
@@ -83,7 +84,7 @@ const deletePlaylist = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, null, "Playlist deleted successfully"));
 });
-
+// update a playlist
 const updatePlaylist = asyncHandler(async (req, res) => {
     const { playlistId } = req.params;
     const { name, description } = req.body;

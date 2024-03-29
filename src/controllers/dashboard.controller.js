@@ -6,7 +6,8 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-const getChannelStats = asyncHandler(async (req, res) => {
+//Get the channel status like total video views, total subscribers, total videos, total likes etc.
+const getChannelStatus = asyncHandler(async (req, res) => {
     const { channelId } = req.params;
 
     // Total video views
@@ -31,7 +32,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
         totalLikes
     }, "Channel stats fetched successfully"));
 });
-
+// get all videos upload by channel
 const getChannelVideos = asyncHandler(async (req, res) => {
     const { channelId } = req.params;
 
@@ -41,6 +42,6 @@ const getChannelVideos = asyncHandler(async (req, res) => {
 });
 
 export {
-    getChannelStats,
+    getChannelStatus,
     getChannelVideos
 };

@@ -7,6 +7,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
+//toggle like on video
 const toggleVideoLike = asyncHandler(async (req, res) => {
     const { videoId } = req.params;
 
@@ -21,7 +22,7 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
 
     const userId = req.user._id; 
 
-    const existingLike = await Like.findOne({ user: userId, video: videoId });
+    const existingLike = await Like.findOne({ likedBy: userId, video: videoId });
 
     if (existingLike) {
         await existingLike.remove();
@@ -31,7 +32,7 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
         return res.status(200).json(new ApiResponse(200, newLike, "Like added successfully"));
     }
 });
-
+// toggle like on comment
 const toggleCommentLike = asyncHandler(async (req, res) => {
     const { commentId } = req.params;
 
@@ -46,7 +47,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
 
     const userId = req.user._id; // i  have authentication middleware that attaches user to request
 
-    const existingLike = await Like.findOne({ user: userId, comment: commentId });
+    const existingLike = await Like.findOne({ likedBy: userId, comment: commentId });
 
     if (existingLike) {
         await existingLike.remove();
@@ -56,7 +57,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
         return res.status(200).json(new ApiResponse(200, newLike, "Like added successfully"));
     }
 });
-
+// toggle like on tweet
 const toggleTweetLike = asyncHandler(async (req, res) => {
     const { tweetId } = req.params;
 
@@ -71,7 +72,7 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
 
     const userId = req.user._id; // i have authentication middleware that attaches user to request
 
-    const existingLike = await Like.findOne({ user: userId, tweet: tweetId });
+    const existingLike = await Like.findOne({ likedBy: userId, tweet: tweetId });
 
     if (existingLike) {
         await existingLike.remove();
@@ -81,7 +82,7 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
         return res.status(200).json(new ApiResponse(200, newLike, "Like added successfully"));
     }
 });
-
+//get all liked videos
 const getLikedVideos = asyncHandler(async (req, res) => {
     const userId = req.user._id; // i have authentication middleware that attaches user to request
 

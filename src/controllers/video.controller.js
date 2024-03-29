@@ -6,6 +6,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
+
+//get all videos based on query, sort, pagination
 const getAllVideos = asyncHandler(async (req, res) => {
     let { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
     page = parseInt(page);
@@ -33,6 +35,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, videos, "Videos fetched successfully"));
 });
 
+// get video, upload to cloudinary, create video
 const publishAVideo = asyncHandler(async (req, res) => {
     const { title, description } = req.body;
     const userId = req.user._id; //i have authentication middleware that attaches user to request
@@ -43,12 +46,14 @@ const publishAVideo = asyncHandler(async (req, res) => {
     const video = await Video.create({
         title,
         description,
-        videoUrl: cloudinaryResponse.secure_url,
+        videoFile: cloudinaryResponse.secure_url,
         user: userId
     });
 
     res.status(201).json(new ApiResponse(201, video, "Video published successfully"));
 });
+
+//get video by id
 
 const getVideoById = asyncHandler(async (req, res) => {
     const { videoId } = req.params;
@@ -65,7 +70,7 @@ const getVideoById = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, video, "Video fetched successfully"));
 });
-
+//update video details like title, description, thumbnail
 const updateVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params;
     const { title, description, thumbnail } = req.body;
@@ -94,7 +99,7 @@ const updateVideo = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, video, "Video updated successfully"));
 });
-
+//delete video
 const deleteVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params;
 
@@ -126,7 +131,7 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
         throw new ApiError(404, "Video not found");
     }
 
-    video.published = !video.published;
+    video.isPublished = !video.isPublished;
     await video.save();
 
     res.status(200).json(new ApiResponse(200, video, "Publish status toggled successfully"));
